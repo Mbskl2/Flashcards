@@ -1,4 +1,5 @@
-﻿using FlashCards.Questions;
+﻿using System;
+using FlashCards.Questions;
 
 namespace FlashCards.Answers
 {
@@ -6,7 +7,7 @@ namespace FlashCards.Answers
     {
         public ValidationResult Validate(IQuestion question)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

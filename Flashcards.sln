@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30028.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flashcards.UI", "Flashcards.UI\Flashcards.UI.csproj", "{CFBA7EF8-EA7E-41A7-8CC5-002AD7FE5029}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashCards", "FlashCards\FlashCards.csproj", "{DE61065F-FDE1-4DE9-85CA-96C564835693}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashCards", "FlashCards\FlashCards.csproj", "{DE61065F-FDE1-4DE9-85CA-96C564835693}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashCardsTests", "FlashCardsTests\FlashCardsTests.csproj", "{2918EDA0-D8C7-4697-A311-FE5EA47F3916}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DE61065F-FDE1-4DE9-85CA-96C564835693}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE61065F-FDE1-4DE9-85CA-96C564835693}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE61065F-FDE1-4DE9-85CA-96C564835693}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2918EDA0-D8C7-4697-A311-FE5EA47F3916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2918EDA0-D8C7-4697-A311-FE5EA47F3916}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2918EDA0-D8C7-4697-A311-FE5EA47F3916}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2918EDA0-D8C7-4697-A311-FE5EA47F3916}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

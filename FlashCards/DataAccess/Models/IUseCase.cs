@@ -1,4 +1,4 @@
-﻿namespace FlashCards.DataAccess.Models
+﻿namespace Flashcards.DataAccess.Models
 {
     public interface IUseCase
     {

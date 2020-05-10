@@ -1,17 +1,17 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FlashCards.Answers;
+using Flashcards.Answers;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using FlashCards.Questions;
+using Flashcards.Questions;
 using FluentAssertions;
 
-namespace FlashCardsTests.Answers
+namespace FlashcardsTests.Answers
 {
     [TestClass]
     public class AnswerValidatorTests
     {
-        private AnswerValidator validator;
+        private IAnswerValidator validator;
         private const string question1 = "Question one one two?";
         private const string answer1 = "Answer1 one one two.";
 

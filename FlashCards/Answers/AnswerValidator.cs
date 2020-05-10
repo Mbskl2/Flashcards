@@ -1,9 +1,9 @@
 ﻿using System;
-using FlashCards.Questions;
+using Flashcards.Questions;
 
-namespace FlashCards.Answers
+namespace Flashcards.Answers
 {
-    public class AnswerValidator
+    class AnswerValidator : IAnswerValidator
     {
         public ValidationResult Validate(IQuestion question, string userAnswer)
         {

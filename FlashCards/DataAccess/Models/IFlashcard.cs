@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace FlashCards.DataAccess.Models
+namespace Flashcards.DataAccess.Models
 {
     public interface IFlashcard
     {

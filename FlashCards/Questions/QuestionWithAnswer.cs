@@ -1,4 +1,4 @@
-﻿namespace FlashCards.Questions
+﻿namespace Flashcards.Questions
 {
     class QuestionWithAnswer : IQuestion
     {

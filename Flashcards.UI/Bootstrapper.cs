@@ -9,6 +9,7 @@ namespace Flashcards.UI
 {
     public class Bootstrapper : BootstrapperBase
     {
+        private readonly SimpleContainer container = new SimpleContainer();
         public Bootstrapper()
         {
             Initialize();
@@ -18,5 +19,28 @@ namespace Flashcards.UI
         {
             DisplayRootViewFor<ShellViewModel>();
         }
+
+        #region IoC
+        protected override object GetInstance(Type service, string key)
+        {
+            return container.GetInstance(service, key);
+        }
+
+        protected override IEnumerable<object> GetAllInstances(Type service)
+        {
+            return container.GetAllInstances(service);
+        }
+
+        protected override void BuildUp(object instance)
+        {
+            container.BuildUp(instance);
+        }
+
+        protected override void Configure()
+        {
+            container.PerRequest<FlashcardsService>();
+            container.PerRequest<ShellViewModel>();
+        }
+        #endregion
     }
 }

@@ -16,4 +16,8 @@
 		<Folder Include="Models\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\FlashCards\FlashCards.csproj" />
+	</ItemGroup>
+
 </Project>

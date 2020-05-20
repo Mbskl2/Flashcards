@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using Flashcards;
 using Flashcards.Answers;
 using Flashcards.DataAccess;
 using Flashcards.Questions;
@@ -10,11 +11,11 @@ using Moq;
 namespace FlashCardsTests
 {
     [TestClass]
-    public class FlashcardsTests
+    public class FlashcardsServiceTests
     {
         private Mock<IFlashcardService> service;
         private IList<IQuestion> questions;
-        private Flashcards.Flashcards flashcards;
+        private FlashcardsService _flashcardsService;
 
         [TestInitialize]
         public void Setup()
@@ -24,46 +25,46 @@ namespace FlashCardsTests
             service.Setup(s => s.Get(It.IsAny<int>())).Returns(questions);
 
             var validator = new Mock<IAnswerValidator>();
-            flashcards = new Flashcards.Flashcards(service.Object, validator.Object);
+            _flashcardsService = new FlashcardsService(service.Object, validator.Object);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Flashcards.Flashcards.FlashcardsNotLoaded))]
+        [ExpectedException(typeof(FlashcardsService.FlashcardsNotLoaded))]
         public void Throw_When_AnswersNotLoadedQuestion()
         {
-            flashcards.AnswerCurrentQuestion("Answer");
+            _flashcardsService.AnswerCurrentQuestion("Answer");
         }
 
         [TestMethod]
         public void CurrentIsNotNull_After_LoadedFlashcards()
         {
-            flashcards.Load(10);
-            flashcards.Current.Should().NotBeNull();
+            _flashcardsService.Load(10);
+            _flashcardsService.Current.Should().NotBeNull();
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void Throws_When_NumberToLoadIsLessThan0()
         {
-            flashcards.Load(0);
+            _flashcardsService.Load(0);
         }
 
         [TestMethod]
         public void ReturnsFalse_When_NoNext()
         {
             // Given
-            flashcards.Load(7);
+            _flashcardsService.Load(7);
             questions.RemoveAt(0);
 
             // Then
-            flashcards.MoveNext().Should().BeFalse();
+            _flashcardsService.MoveNext().Should().BeFalse();
         }
 
         [TestMethod]
         public void ReturnTrue_When_MoreLeft()
         {
-            flashcards.Load(3);
-            flashcards.MoveNext().Should().BeTrue();
+            _flashcardsService.Load(3);
+            _flashcardsService.MoveNext().Should().BeTrue();
         }
 
         [TestMethod]
@@ -71,17 +72,17 @@ namespace FlashCardsTests
         {
             // Given
             SetupValidator(new AlwaysFailedValidator());
-            flashcards.Load(13);
+            _flashcardsService.Load(13);
             
             // When
             for (int i = 0; i < 10; i++)
             {
-                flashcards.AnswerCurrentQuestion("Wrong answer!!");
-                flashcards.MoveNext();
+                _flashcardsService.AnswerCurrentQuestion("Wrong answer!!");
+                _flashcardsService.MoveNext();
             }
 
             // Then
-            flashcards.MoveNext().Should().BeTrue();
+            _flashcardsService.MoveNext().Should().BeTrue();
         }
 
         [TestMethod]
@@ -89,18 +90,18 @@ namespace FlashCardsTests
         {
             // Given
             SetupValidator(new AlwaysCorrectValidator());
-            flashcards.Load(100);
+            _flashcardsService.Load(100);
 
             // When
-            flashcards.AnswerCurrentQuestion("Correct answer!!");
+            _flashcardsService.AnswerCurrentQuestion("Correct answer!!");
 
             // Then
-            flashcards.MoveNext().Should().BeFalse();
+            _flashcardsService.MoveNext().Should().BeFalse();
         }
 
         private void SetupValidator(IAnswerValidator validator)
         {
-            this.flashcards = new Flashcards.Flashcards(service.Object, validator);
+            this._flashcardsService = new FlashcardsService(service.Object, validator);
         }
 
         private class AlwaysFailedValidator : IAnswerValidator

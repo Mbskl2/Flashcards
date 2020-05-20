@@ -1,6 +1,6 @@
 ﻿namespace Flashcards.Questions
 {
-    class QuestionWithAnswer : IQuestion
+    class QuestionWithAnswer : IQuestion // TODO: Shouldn't this be implemented in DataAccess module?
     {
         public string Text { get; }
         public string Answer { get; }

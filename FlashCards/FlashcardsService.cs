@@ -10,7 +10,7 @@ using Flashcards.Questions;
 
 namespace Flashcards
 {
-    public class FlashcardsService
+    public class FlashcardsService // TODO: Cleverer name?
     {
         public int NumberOfFlashcards { get; }
 

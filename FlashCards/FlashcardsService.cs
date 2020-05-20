@@ -10,7 +10,7 @@ using Flashcards.Questions;
 
 namespace Flashcards
 {
-    public class Flashcards
+    public class FlashcardsService
     {
         public int NumberOfFlashcards { get; }
 
@@ -20,7 +20,7 @@ namespace Flashcards
         private readonly IAnswerValidator validator;
         private readonly Random random = new Random();
 
-        public Flashcards(IFlashcardService service, IAnswerValidator validator)
+        public FlashcardsService(IFlashcardService service, IAnswerValidator validator)
         {
             this.service = service;
             this.validator = validator;

@@ -1,15 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Flashcards.Answers;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Flashcards.Questions;
+﻿using FlashCards.Answers;
+using FlashCardsTests.TestHelpers;
 using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FlashcardsTests.Answers
+namespace FlashCardsTests.Answers
 {
     [TestClass]
-    public class AnswerValidatorTests
+    public partial class AnswerValidatorTests
     {
         private IAnswerValidator validator;
         private const string question1 = "Question one one two?";
@@ -52,11 +49,6 @@ namespace FlashcardsTests.Answers
             var result = validator.Validate(question, answer1.ToLower());
             result.IsCorrect.Should().BeFalse();
             result.CorrectAnswer.Should().Be(answer1);
-        }
-
-        private class Question : IQuestion
-        {
-            public string Text { get; }
         }
     }
 }

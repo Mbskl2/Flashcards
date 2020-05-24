@@ -1,4 +1,4 @@
-﻿namespace Flashcards.Answers
+﻿namespace FlashCards.Answers
 {
     public class ValidationResult
     {

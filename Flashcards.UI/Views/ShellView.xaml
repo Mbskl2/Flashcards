@@ -39,7 +39,7 @@
         <!-- Row 3 -->
         <Button Grid.Column="1" Grid.Row="3" Name="Enter">Enter!</Button>
         <!-- Row 4 -->
-        <TextBlock Grid.Column="1" Grid.Row="4" Name="ResultText"/>
+        <TextBlock Grid.Column="1" Grid.Row="4" Name="ResultSentence"/>
         <!-- Row 5 -->
         <!-- Row 6 -->
         <!-- Row 7 -->

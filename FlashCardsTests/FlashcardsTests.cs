@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using Flashcards;
-using Flashcards.Answers;
-using Flashcards.DataAccess;
-using Flashcards.Questions;
+using FlashCards;
+using FlashCards.Answers;
+using FlashCards.DataAccess;
+using FlashCardsTests.TestHelpers;
 using FluentAssertions;
 using Moq;
 
@@ -14,14 +14,14 @@ namespace FlashCardsTests
     public class FlashcardsServiceTests
     {
         private Mock<IFlashcardService> service;
-        private IList<IQuestion> questions;
+        private IList<IUseCase> questions;
         private FlashcardsService _flashcardsService;
 
         [TestInitialize]
         public void Setup()
         {
             service = new Mock<IFlashcardService>();
-            questions = new List<IQuestion> { new QuestionWithAnswer("question", "answer") };
+            questions = new List<IUseCase> { new QuestionWithAnswer("question", "answer") };
             service.Setup(s => s.Get(It.IsAny<int>())).Returns(questions);
 
             var validator = new Mock<IAnswerValidator>();
@@ -106,7 +106,7 @@ namespace FlashCardsTests
 
         private class AlwaysFailedValidator : IAnswerValidator
         {
-            public ValidationResult Validate(IQuestion question, string userAnswer)
+            public ValidationResult Validate(IUseCase question, string userAnswer)
             {
                 return ValidationResult.Failed("Wrong answer !!! 123");
             }
@@ -114,7 +114,7 @@ namespace FlashCardsTests
 
         private class AlwaysCorrectValidator : IAnswerValidator
         {
-            public ValidationResult Validate(IQuestion question, string userAnswer)
+            public ValidationResult Validate(IUseCase question, string userAnswer)
             {
                 return ValidationResult.Correct();
             }

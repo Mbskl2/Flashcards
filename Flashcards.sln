@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashCards", "FlashCards\Fl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlashCardsTests", "FlashCardsTests\FlashCardsTests.csproj", "{2918EDA0-D8C7-4697-A311-FE5EA47F3916}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashcards.DA.InMemory", "Flashcards.DA.InMemory\Flashcards.DA.InMemory.csproj", "{B003E399-B8E0-40B4-B2C0-F33B51C1BDBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flashcards.DA.InMemory", "Flashcards.DA.InMemory\Flashcards.DA.InMemory.csproj", "{B003E399-B8E0-40B4-B2C0-F33B51C1BDBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

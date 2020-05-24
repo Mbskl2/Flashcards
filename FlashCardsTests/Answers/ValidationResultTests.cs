@@ -1,4 +1,4 @@
-﻿using Flashcards.Answers;
+﻿using FlashCards.Answers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
 

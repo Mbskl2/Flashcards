@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Transactions;
-using Flashcards.Answers;
-using Flashcards.DataAccess;
-using Flashcards.Questions;
+using FlashCards.Answers;
+using FlashCards.DataAccess;
 
-namespace Flashcards
+namespace FlashCards
 {
     public class FlashcardsService // TODO: Cleverer name?
     {
         public int NumberOfFlashcards { get; }
 
         private readonly IFlashcardService service;
-        public IQuestion? Current { get; private set; }
-        private IList<IQuestion> questions = new List<IQuestion>();
+        public IUseCase? Current { get; private set; }
+        private IList<IUseCase> questions = new List<IUseCase>();
         private readonly IAnswerValidator validator;
         private readonly Random random = new Random();
 

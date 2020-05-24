@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Caliburn.Micro;
+using FlashCards;
 
 namespace Flashcards.UI.ViewModels
 {
@@ -17,7 +18,7 @@ namespace Flashcards.UI.ViewModels
             this._flashcardsService = flashcardsService;
             flashcardsService.Load(100);
             if (flashcardsService.Current != null)
-                Question = flashcardsService.Current.Text;
+                Question = flashcardsService.Current.Sentence;
         }
 
         public void Enter(string answer)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using Caliburn.Micro;
+using FlashCards;
 using Flashcards.UI.ViewModels;
 
 namespace Flashcards.UI

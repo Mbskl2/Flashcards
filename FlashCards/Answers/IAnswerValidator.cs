@@ -1,9 +1,7 @@
-﻿using Flashcards.Questions;
-
-namespace Flashcards.Answers
+﻿namespace FlashCards.Answers
 {
     public interface IAnswerValidator
     {
-        ValidationResult Validate(IQuestion question, string userAnswer);
+        ValidationResult Validate(IUseCase question, string userAnswer);
     }
 }

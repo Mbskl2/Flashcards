@@ -1,18 +1,17 @@
 ﻿using System;
-using Flashcards.Questions;
 
-namespace Flashcards.Answers
+namespace FlashCards.Answers
 {
     class AnswerValidator : IAnswerValidator
     {
-        public ValidationResult Validate(IQuestion question, string userAnswer)
+        public ValidationResult Validate(IUseCase question, string userAnswer)
         {
-            var qa = question as QuestionWithAnswer;
+            var qa = question as DataAccess.Models.IUseCase;
             if (qa is null)
                 throw new WrongTypeException();
-            if (qa.Answer.Equals(userAnswer, StringComparison.InvariantCulture))
+            if (qa.Translation.Equals(userAnswer, StringComparison.InvariantCulture))
                 return ValidationResult.Correct();
-            return ValidationResult.Failed(qa.Answer);
+            return ValidationResult.Failed(qa.Translation);
         }
 
         public class WrongTypeException : Exception

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Flashcards.Questions;
 
-namespace Flashcards.DataAccess
+namespace FlashCards.DataAccess
 {
     public interface IFlashcardService
     {
-        IList<IQuestion> Get(int i);
+        IList<IUseCase> Get(int i);
     }
 }

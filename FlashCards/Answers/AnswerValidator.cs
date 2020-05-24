@@ -1,17 +1,30 @@
 ﻿using System;
+using FlashCards.DataAccess;
 
 namespace FlashCards.Answers
 {
     class AnswerValidator : IAnswerValidator
     {
-        public ValidationResult Validate(IUseCase question, string userAnswer)
+        public ValidationResult Validate(IUseCase useCase, string userAnswer)
         {
-            var qa = question as DataAccess.Models.IUseCase;
-            if (qa is null)
+            var t = useCase as DataAccess.ITranslatable;
+            return Validate(t, userAnswer);
+        }
+
+
+        public ValidationResult Validate(IFlashcard flashcard, string userAnswer)
+        {
+            var t = flashcard as DataAccess.ITranslatable;
+            return Validate(t, userAnswer);
+        }
+
+        private static ValidationResult Validate(ITranslatable t, string userAnswer)
+        {
+            if (t is null)
                 throw new WrongTypeException();
-            if (qa.Translation.Equals(userAnswer, StringComparison.InvariantCulture))
+            if (t.Translation.Equals(userAnswer, StringComparison.InvariantCulture))
                 return ValidationResult.Correct();
-            return ValidationResult.Failed(qa.Translation);
+            return ValidationResult.Failed(t.Translation);
         }
 
         public class WrongTypeException : Exception

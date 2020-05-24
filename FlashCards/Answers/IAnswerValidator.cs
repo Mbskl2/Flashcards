@@ -2,6 +2,7 @@
 {
     public interface IAnswerValidator
     {
-        ValidationResult Validate(IUseCase question, string userAnswer);
+        ValidationResult Validate(IUseCase useCase, string userAnswer);
+        ValidationResult Validate(IFlashcard flashcard, string userAnswer);
     }
 }

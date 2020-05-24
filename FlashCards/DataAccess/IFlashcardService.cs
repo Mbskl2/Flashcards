@@ -4,6 +4,6 @@ namespace FlashCards.DataAccess
 {
     public interface IFlashcardService
     {
-        IList<IUseCase> Get(int i);
+        IList<Models.IFlashcard> Get(int i);
     }
 }

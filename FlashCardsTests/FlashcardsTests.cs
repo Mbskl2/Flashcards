@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using FlashCards;
 using FlashCards.Answers;
 using FlashCards.DataAccess;
-using FlashCardsTests.TestHelpers;
 using FluentAssertions;
 using Moq;
+using IDAFlashcard = FlashCards.DataAccess.Models.IFlashcard;
 
 namespace FlashCardsTests
 {
@@ -14,18 +14,23 @@ namespace FlashCardsTests
     public class FlashcardsServiceTests
     {
         private Mock<IFlashcardService> service;
-        private IList<IUseCase> questions;
+        private IList<IDAFlashcard> flashcards;
         private FlashcardsService _flashcardsService;
 
         [TestInitialize]
         public void Setup()
         {
             service = new Mock<IFlashcardService>();
-            questions = new List<IUseCase> { new QuestionWithAnswer("question", "answer") };
-            service.Setup(s => s.Get(It.IsAny<int>())).Returns(questions);
+            flashcards = CreateFlashcards();
+            service.Setup(s => s.Get(It.IsAny<int>())).Returns(flashcards);
 
             var validator = new Mock<IAnswerValidator>();
             _flashcardsService = new FlashcardsService(service.Object, validator.Object);
+        }
+
+        private static List<IDAFlashcard> CreateFlashcards()
+        {
+            return new List<IDAFlashcard> { new Flashcard() };
         }
 
         [TestMethod]
@@ -47,17 +52,6 @@ namespace FlashCardsTests
         public void Throws_When_NumberToLoadIsLessThan0()
         {
             _flashcardsService.Load(0);
-        }
-
-        [TestMethod]
-        public void ReturnsFalse_When_NoNext()
-        {
-            // Given
-            _flashcardsService.Load(7);
-            questions.RemoveAt(0);
-
-            // Then
-            _flashcardsService.MoveNext().Should().BeFalse();
         }
 
         [TestMethod]
@@ -106,7 +100,12 @@ namespace FlashCardsTests
 
         private class AlwaysFailedValidator : IAnswerValidator
         {
-            public ValidationResult Validate(IUseCase question, string userAnswer)
+            public ValidationResult Validate(IUseCase useCase, string userAnswer)
+            {
+                return ValidationResult.Failed("Wrong answer !!! 123");
+            }
+
+            public ValidationResult Validate(IFlashcard flashcard, string userAnswer)
             {
                 return ValidationResult.Failed("Wrong answer !!! 123");
             }
@@ -114,10 +113,22 @@ namespace FlashCardsTests
 
         private class AlwaysCorrectValidator : IAnswerValidator
         {
-            public ValidationResult Validate(IUseCase question, string userAnswer)
+            public ValidationResult Validate(IUseCase useCase, string userAnswer)
             {
                 return ValidationResult.Correct();
             }
+
+            public ValidationResult Validate(IFlashcard flashcard, string userAnswer)
+            {
+                return ValidationResult.Correct();
+            }
+        }
+
+        private class Flashcard : IDAFlashcard
+        {
+            public string Translation { get; }
+            public string Word { get; }
+            public IList<FlashCards.DataAccess.Models.IUseCase> UseCases { get; }
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Flashcards.UI.ViewModels
             this._flashcardsService = flashcardsService;
             flashcardsService.Load(100);
             if (flashcardsService.Current != null)
-                Question = flashcardsService.Current.Sentence;
+                Question = flashcardsService.Current.Word;
         }
 
         public void Enter(string answer)

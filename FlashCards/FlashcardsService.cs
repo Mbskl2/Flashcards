@@ -6,13 +6,13 @@ using FlashCards.DataAccess;
 
 namespace FlashCards
 {
-    public class FlashcardsService // TODO: Cleverer name?
+    public class FlashcardsService
     {
         public int NumberOfFlashcards { get; }
 
         private readonly IFlashcardService service;
-        public IUseCase? Current { get; private set; }
-        private IList<IUseCase> questions = new List<IUseCase>();
+        public IFlashcard? Current { get; private set; }
+        private IList<IFlashcard> flashcards = new List<IFlashcard>();
         private readonly IAnswerValidator validator;
         private readonly Random random = new Random();
 
@@ -26,8 +26,8 @@ namespace FlashCards
         {
             if (numberOfFlashcards <= 0)
                 throw new ArgumentException($"{numberOfFlashcards} cannot be less than 1.");
-            questions = service.Get(numberOfFlashcards);
-            Current = questions.First();
+            flashcards = service.Get(numberOfFlashcards).Select(f => (IFlashcard) f).ToList();
+            Current = flashcards.First();
         }
 
         public ValidationResult AnswerCurrentQuestion(string answer)
@@ -36,15 +36,15 @@ namespace FlashCards
                 throw new FlashcardsNotLoaded();
             var result = validator.Validate(Current, answer);
             if (result.IsCorrect)
-                questions.Remove(Current);
+                flashcards.Remove(Current);
             return result;
         }
 
         public bool MoveNext()
         {
-            if (questions.Count == 0)
+            if (flashcards.Count == 0)
                 return false;
-            Current = questions[random.Next(questions.Count)];
+            Current = flashcards[random.Next(flashcards.Count)];
             return true;
         }
 

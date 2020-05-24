@@ -2,10 +2,8 @@
 
 namespace FlashCards.DataAccess.Models
 {
-    public interface IFlashcard
+    public interface IFlashcard : FlashCards.IFlashcard, ITranslatable
     {
-        string Word { get; }
-        string Translation { get; }
         IList<IUseCase> UseCases { get; }
     }
 }

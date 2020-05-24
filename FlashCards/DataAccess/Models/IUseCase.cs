@@ -1,8 +1,6 @@
 ﻿namespace FlashCards.DataAccess.Models
 {
-    public interface IUseCase
+    public interface IUseCase : FlashCards.IUseCase, ITranslatable
     {
-        string Sentence { get; }
-        string Translation { get; }
     }
 }

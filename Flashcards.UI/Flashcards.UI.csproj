@@ -17,6 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Flashcards.DA.InMemory\Flashcards.DA.InMemory.csproj" />
 	  <ProjectReference Include="..\FlashCards\FlashCards.csproj" />
 	</ItemGroup>
 

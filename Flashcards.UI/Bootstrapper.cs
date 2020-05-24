@@ -4,6 +4,8 @@ using System.Text;
 using System.Windows;
 using Caliburn.Micro;
 using FlashCards;
+using Flashcards.DA.InMemory;
+using FlashCards.DataAccess;
 using Flashcards.UI.ViewModels;
 
 namespace Flashcards.UI
@@ -41,6 +43,7 @@ namespace Flashcards.UI
         {
             container.PerRequest<FlashcardsService>();
             container.PerRequest<ShellViewModel>();
+            container.PerRequest<IFlashcardService, InMemoryFlashcardService>();
         }
         #endregion
     }

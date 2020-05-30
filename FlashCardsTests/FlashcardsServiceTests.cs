@@ -7,7 +7,7 @@ using FlashCards.DataAccess;
 using FluentAssertions;
 using Moq;
 using IDAFlashcard = FlashCards.DataAccess.Models.IFlashcard;
-
+using IDAUseCase = FlashCards.DataAccess.Models.IUseCase;
 namespace FlashCardsTests
 {
     [TestClass]
@@ -37,7 +37,7 @@ namespace FlashCardsTests
         [ExpectedException(typeof(FlashcardsService.FlashcardsNotLoaded))]
         public void Throw_When_AnswersNotLoadedQuestion()
         {
-            _flashcardsService.AnswerCurrentQuestion("Answer");
+            _flashcardsService.AnswerCurrentFlashcard("Answer");
         }
 
         [TestMethod]
@@ -71,7 +71,7 @@ namespace FlashCardsTests
             // When
             for (int i = 0; i < 10; i++)
             {
-                _flashcardsService.AnswerCurrentQuestion("Wrong answer!!");
+                _flashcardsService.AnswerCurrentFlashcard("Wrong answer!!");
                 _flashcardsService.MoveNext();
             }
 
@@ -80,17 +80,50 @@ namespace FlashCardsTests
         }
 
         [TestMethod]
-        public void RemoveQuestion_When_AnswerCorrectly()
+        public void RemoveFlashcard_When_AnswerCorrectly()
         {
             // Given
             SetupValidator(new AlwaysCorrectValidator());
             _flashcardsService.Load(100);
 
             // When
-            _flashcardsService.AnswerCurrentQuestion("Correct answer!!");
+            _flashcardsService.AnswerCurrentFlashcard("Correct answer!!");
 
             // Then
             _flashcardsService.MoveNext().Should().BeFalse();
+        }
+
+        [TestMethod]
+        public void RemoveFlashcard_When_AnswerCardWithUseCasesCorrectly()
+        {
+            //Given
+            SetupValidator(new AlwaysCorrectValidator());
+            _flashcardsService.Load(100);
+
+            //When
+            _flashcardsService.AnswerCurrentFlashcard("answer", "useCase1Answer", "useCase2Answer");
+
+            //Then
+            _flashcardsService.MoveNext().Should().BeFalse();
+        }
+
+        [TestMethod]
+        public void ReturnAsManyResults_As_UseCasesPlusMainWord()
+        {
+            //Given
+            SetupValidator(new AlwaysFailedValidator());
+            flashcards.Insert(0, new Flashcard()
+            {
+                UseCases = new List<IUseCase>()
+                {
+                    new UseCase(), new UseCase(), new UseCase(), new UseCase()
+                }
+            });
+            _flashcardsService.Load(100);
+
+            //When
+            var results = _flashcardsService.AnswerCurrentFlashcard("1", "2");
+            results.Count.Should().Be(5);
         }
 
         private void SetupValidator(IAnswerValidator validator)
@@ -128,7 +161,13 @@ namespace FlashCardsTests
         {
             public string Translation { get; }
             public string Word { get; }
-            public IList<FlashCards.DataAccess.Models.IUseCase> UseCases { get; }
+            public IList<IUseCase> UseCases { get; set; }
+        }
+
+        private class UseCase : IDAUseCase
+        {
+            public string Sentence { get; }
+            public string Translation { get; }
         }
     }
 }

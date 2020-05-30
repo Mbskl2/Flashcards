@@ -110,6 +110,7 @@ namespace FlashCardsTests.Answers
         class Flashcard : FlashCards.IFlashcard
         {
             public string Word { get; }
+            public IList<FlashCards.IUseCase> UseCases { get; }
         }
 
         class FlashcardWithAnswer : IFlashcard
@@ -117,6 +118,7 @@ namespace FlashCardsTests.Answers
             public string Word { get; }
             public string Translation { get; }
             public IList<IUseCase> UseCases { get; }
+            IList<FlashCards.IUseCase> FlashCards.IFlashcard.UseCases { get; }
 
             public FlashcardWithAnswer(string w, string t)
             {

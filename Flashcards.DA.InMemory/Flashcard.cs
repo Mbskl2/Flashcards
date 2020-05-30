@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FlashCards.DataAccess.Models;
 
 namespace Flashcards.DA.InMemory
@@ -7,13 +8,13 @@ namespace Flashcards.DA.InMemory
     {
         public string Word { get; }
         public string Translation { get; }
-        public IList<IUseCase> UseCases { get; }
+        public IList<FlashCards.IUseCase> UseCases { get; }
 
         public Flashcard(string word, string translation, IList<IUseCase> useCases)
         {
             Word = word;
             Translation = translation;
-            UseCases = useCases;
+            UseCases = useCases.Select(s => (FlashCards.IUseCase)s).ToList();
         }
     }
 }

@@ -23,11 +23,11 @@ namespace Flashcards.UI.ViewModels
 
         public void Enter(string answer)
         {
-            var result = _flashcardsService.AnswerCurrentQuestion(answer);
-            if (result.IsCorrect)
-                ResultText = "Correct!";
-            else
-                ResultText = $"Wrong! The answer should be {result.CorrectAnswer} ";
+            var result = _flashcardsService.AnswerCurrentFlashcard(answer);
+            //if (result.IsCorrect)
+            //    ResultText = "Correct!";
+            //else
+            //    ResultText = $"Wrong! The answer should be {result.CorrectAnswer} ";
         }
     }
 }

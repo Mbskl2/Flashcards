@@ -7,24 +7,24 @@ namespace FlashCards.Answers
     {
         public ValidationResult Validate(IUseCase useCase, string userAnswer)
         {
-            var t = useCase as DataAccess.ITranslatable;
-            return Validate(t, userAnswer);
+            return ValidateAnswer(useCase, userAnswer);
         }
 
 
         public ValidationResult Validate(IFlashcard flashcard, string userAnswer)
         {
-            var t = flashcard as DataAccess.ITranslatable;
-            return Validate(t, userAnswer);
+            return ValidateAnswer(flashcard, userAnswer);
         }
 
-        private static ValidationResult Validate(ITranslatable t, string userAnswer)
+        private static ValidationResult ValidateAnswer(dynamic toValidate, string userAnswer)
         {
-            if (t is null)
-                throw new WrongTypeException();
-            if (t.Translation.Equals(userAnswer, StringComparison.InvariantCulture))
-                return ValidationResult.Correct();
-            return ValidationResult.Failed(t.Translation);
+            if (toValidate is ITranslatable t)
+            {
+                if (t.Translation.Equals(userAnswer, StringComparison.InvariantCulture))
+                    return ValidationResult.Correct();
+                return ValidationResult.Failed(t.Translation);
+            }
+            throw new WrongTypeException();
         }
 
         public class WrongTypeException : Exception

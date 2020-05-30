@@ -15,6 +15,7 @@ namespace FlashCards
         private IList<IFlashcard> flashcards = new List<IFlashcard>();
         private readonly IAnswerValidator validator;
         private readonly Random random = new Random();
+        private const string WRONG_ANSWER = "!@#$%%^&*(){}|:?><PKNJOV3452:";
 
         public FlashcardsService(IFlashcardService service, IAnswerValidator validator)
         {
@@ -30,14 +31,33 @@ namespace FlashCards
             Current = flashcards.First();
         }
 
-        public ValidationResult AnswerCurrentQuestion(string answer)
+        public IList<ValidationResult> AnswerCurrentFlashcard(string answer, params string[] useCaseAnswers)
         {
             if (Current is null)
                 throw new FlashcardsNotLoaded();
-            var result = validator.Validate(Current, answer);
-            if (result.IsCorrect)
+            var allResults = new List<ValidationResult> {validator.Validate(Current, answer)};
+            allResults.AddRange(ValidateUseCaseAnswers(Current, useCaseAnswers));
+
+            if (allResults.All(r => r.IsCorrect))
                 flashcards.Remove(Current);
-            return result;
+            return allResults;
+        }
+
+        private List<ValidationResult> ValidateUseCaseAnswers(IFlashcard current, string[] useCaseAnswers)
+        {
+            List<ValidationResult> results = new List<ValidationResult>();
+            if (current.UseCases == null)
+                return results;
+
+            for (int i = 0; i < current.UseCases.Count; i++)
+            {
+                var useCase = current.UseCases[i];
+                if (useCaseAnswers.Length > i)
+                    results.Add(validator.Validate(useCase, useCaseAnswers[i]));
+                else
+                    results.Add(validator.Validate(useCase, WRONG_ANSWER));
+            }
+            return results;
         }
 
         public bool MoveNext()

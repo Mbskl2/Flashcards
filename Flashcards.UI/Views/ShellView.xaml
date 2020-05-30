@@ -33,13 +33,18 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <!-- Row 1 -->
-        <TextBlock Grid.Column="1" Grid.Row="1" Name="Question"/>
+        <TextBlock Grid.Column="1" Grid.Row="1" Name="Flashcard_Word"/>
+        <TextBox Grid.Column="2" Grid.Row="1" Name="Answer" MinWidth="50">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" />
+                <!-- Dopisać Binding do commendy-->
+            </TextBox.InputBindings>
+        </TextBox>
         <!-- Row 2 -->
-        <TextBox Grid.Column="1" Grid.Row="2" Name="Answer"/>
-        <!-- Row 3 -->
         <Button Grid.Column="1" Grid.Row="3" Name="Enter">Enter!</Button>
+        <!-- Row 3 -->
+        <TextBlock Grid.Column="1" Grid.Row="4" Name="ResultText"/>
         <!-- Row 4 -->
-        <TextBlock Grid.Column="1" Grid.Row="4" Name="ResultSentence"/>
         <!-- Row 5 -->
         <!-- Row 6 -->
         <!-- Row 7 -->

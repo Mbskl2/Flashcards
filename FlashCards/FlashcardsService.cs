@@ -8,7 +8,7 @@ namespace FlashCards
 {
     public class FlashcardsService
     {
-        public int NumberOfFlashcards { get; }
+        public int NumberOfFlashcards { get; } //TODO: Użyć?
 
         private readonly IFlashcardService service;
         public IFlashcard? Current { get; private set; }

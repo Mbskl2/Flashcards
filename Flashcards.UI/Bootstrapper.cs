@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using Caliburn.Micro;
 using FlashCards;
+using FlashCards.Answers;
 using Flashcards.DA.InMemory;
 using FlashCards.DataAccess;
 using Flashcards.UI.ViewModels;
@@ -41,9 +42,12 @@ namespace Flashcards.UI
 
         protected override void Configure()
         {
+            container.Singleton<IEventAggregator, EventAggregator>();
+            container.Singleton<IWindowManager, WindowManager>();
+            container.PerRequest<IFlashcardService, InMemoryFlashcardService>();
+            container.PerRequest<IAnswerValidator, AnswerValidator>();
             container.PerRequest<FlashcardsService>();
             container.PerRequest<ShellViewModel>();
-            container.PerRequest<IFlashcardService, InMemoryFlashcardService>();
         }
         #endregion
     }

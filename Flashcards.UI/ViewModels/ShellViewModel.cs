@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using Caliburn.Micro;
 using FlashCards;
 
@@ -8,26 +9,51 @@ namespace Flashcards.UI.ViewModels
 {
     class ShellViewModel : Screen
     {
-        private readonly FlashcardsService _flashcardsService;
-        public string Question { get; private set; } = "";
+        private string resultText = "";
+        private readonly FlashcardsService flashcardsService;
+        public IFlashcard? Flashcard { get; private set; }
         public string Answer { get; set; } = "";
-        public string ResultText { get; private set; } = "";
+        public ICommand EnterCommand { get; }; //TODO: Zrobić
+
+        public string ResultText
+        {
+            get => resultText;
+            private set
+            {
+                resultText = value;
+                NotifyOfPropertyChange(() => ResultText);
+            }
+        }
 
         public ShellViewModel(FlashcardsService flashcardsService)
         {
-            this._flashcardsService = flashcardsService;
+            this.flashcardsService = flashcardsService;
             flashcardsService.Load(100);
-            if (flashcardsService.Current != null)
-                Question = flashcardsService.Current.Word;
+            Flashcard = flashcardsService.Current;
         }
 
         public void Enter(string answer)
         {
-            var result = _flashcardsService.AnswerCurrentFlashcard(answer);
-            //if (result.IsCorrect)
-            //    ResultText = "Correct!";
-            //else
-            //    ResultText = $"Wrong! The answer should be {result.CorrectAnswer} ";
+            var results = flashcardsService.AnswerCurrentFlashcard(answer);
+            if (results[0].IsCorrect) //TODO: Add handling of many results
+                ResultText = "Correct!";
+            else
+                ResultText = $"Wrong! Correct answer: {results[0].CorrectAnswer} ";
+        }
+
+        private class EnterAnswerCommand : ICommand
+        {
+            public bool CanExecute(object parameter)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Execute(object parameter)
+            {
+                throw new NotImplementedException();
+            }
+
+            public event EventHandler CanExecuteChanged;
         }
     }
 }

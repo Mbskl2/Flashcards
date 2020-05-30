@@ -3,7 +3,7 @@ using FlashCards.DataAccess;
 
 namespace FlashCards.Answers
 {
-    class AnswerValidator : IAnswerValidator
+    public class AnswerValidator : IAnswerValidator
     {
         public ValidationResult Validate(IUseCase useCase, string userAnswer)
         {
